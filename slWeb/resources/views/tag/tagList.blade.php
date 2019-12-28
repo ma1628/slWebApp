@@ -10,7 +10,7 @@
     <div class="container mt-4">
         <h2>タグ一覧</h2>
         @forelse ($tags as $tag)
-            <a href="{{ route('sloganListByTagSearch',['$tag_id'=> $tag->id]) }}"
+            <a href="{{ route('sloganListByTagSearch',['tag_id'=> $tag->id]) }}"
                class="badge badge-pill badge-secondary">{{$tag->tag_name}}({{ $tag->slogans_count}})</a>
         @empty
             <p>タグが存在しません</p>

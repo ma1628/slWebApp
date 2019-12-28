@@ -15,16 +15,16 @@
 
         <div class="border p-4">
             <h2>
-                {!! nl2br(e(str_limit($slogan->phrase."\r\n", 200))) !!}
+                {!! nl2br(e(Str::limit($slogan->phrase."\r\n", 200))) !!}
             </h2>
             @forelse ($slogan->tags as $tag)
                 <a href="#" class="badge badge-pill  badge-primary">{{$tag->tag_name}}</a>
             @empty
             @endforelse
             <br>
-            {!! nl2br(e(str_limit($slogan->writer."\r\n", 200))) !!}
-            {!! nl2br(e(str_limit("出典：".$slogan->source."\r\n", 200))) !!}
-            {!! nl2br(e(str_limit("その他補足：".$slogan->supplement."\r\n", 200))) !!}
+            {!! nl2br(e(Str::limit($slogan->writer."\r\n", 200))) !!}
+            {!! nl2br(e(Str::limit("出典：".$slogan->source."\r\n", 200))) !!}
+            {!! nl2br(e(Str::limit("その他補足：".$slogan->supplement."\r\n", 200))) !!}
             <a href="{{ route('editSlogan',['slogan_id'=> $slogan->id]) }}"
                class="btn btn-outline-primary mb-5">
                 編集する

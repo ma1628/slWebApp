@@ -49,7 +49,7 @@
                             <div class="card-text">
                                 <div class="rate_star_output"><span hidden>{{$slogan->rating}}</span></div>
                                 @forelse ($slogan->tags as $tag)
-                                    <a href="{{ route('sloganListByTagSearch',['$tag_id'=> $tag->id]) }}" class="badge badge-pill  badge-secondary">{{$tag->tag_name}}</a>
+                                    <a href="{{ route('sloganListByTagSearch',['tag_id'=> $tag->id]) }}" class="badge badge-pill  badge-secondary">{{$tag->tag_name}}</a>
                                     @if ($loop->last)
                                         <br>
                                     @endif
@@ -59,9 +59,9 @@
                                     @endif
                                 @empty
                                 @endforelse
-                                {!! nl2br(e(str_limit($slogan->writer."\r\n", 200))) !!}
-                                {!! nl2br(e(str_limit("出典：".$slogan->source."\r\n", 200))) !!}
-                                {!! nl2br(e(str_limit("その他補足：".$slogan->supplement."\r\n", 40))) !!}
+                                {!! nl2br(e(Str::limit($slogan->writer."\r\n", 200))) !!}
+                                {!! nl2br(e(Str::limit("出典：".$slogan->source."\r\n", 200))) !!}
+                                {!! nl2br(e(Str::limit("その他補足：".$slogan->supplement."\r\n", 40))) !!}
                             </div>
                         </div>
                         <div class="card-footer">
