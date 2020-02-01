@@ -30,7 +30,7 @@ class SloganDetailsPost extends FormRequest
             'supplement' => 'nullable|string|max:1000',
             //'tags.*.slogan_id' => 'required|integer|exists:slogans,id',
 //            'tags' => 'string|max:30|regex:/[^　]+/',
-            'tagNames' => 'string|max:90|regex:/[#.{1,30}]+/',
+            'tagNames' => 'nullable|string|max:90|regex:/[#.{1,30}]+/',
 //            'tags.*.tag_kana' => 'nullable|string|max:90|regex:/^[ぁ-んーa-zA-Z0-9]+$/u',
         ];
     }

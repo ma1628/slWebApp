@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="container mt-4">
+    <div class="container-fluid">
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -44,9 +44,19 @@
                         <p class="mt-2">
                             {!! nl2br(e($comment->text)) !!}
                         </p>
-                        <time class="text-secondary">
-                            {{ $comment->created_at->format('Y.m.d H:i') }}
-                        </time>
+
+
+                            <form name="deleteCommentForm" action="{{ route('deleteComment')}}" method="post">
+
+                                <time class="text-secondary">
+                                    {{ $comment->created_at->format('Y.m.d H:i') }}
+                                </time>
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                                    <input type="hidden" name="slogan_id" value="{{$slogan->id}}">
+                                    <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+
                     </div>
                 @empty
                     <p>コメントはまだありません。</p>
@@ -68,7 +78,7 @@
                     {{--                    <h4 class="modal-title" id="modal-label">ダイアログ</h4>--}}
                 </div>
                 <!-- 5.モーダルのボディ -->
-                <form id="addForm" action="{{ route('addComment')}}" method="post">
+                <form id="addForm" action="{{ route('addComment')}}" onsubmit="return false;" method="post">
                     {{ csrf_field() }}
                     <input type="hidden" class="form-control" name="slogan_id" value="{{$slogan->id}}">
                     <div class="modal-body">
@@ -89,11 +99,8 @@
                     </div>
                     <!-- 6.モーダルのフッタ -->
                     <div class="modal-footer">
-
-
-                        <button type="submit" form="addForm" name="submit" class="btn btn-outline-primary mb-5">保存
+                        <button type="button" onclick="submit();" form="addForm" class="btn btn-outline-primary mb-5">保存
                         </button>
-
                     </div>
                 </form>
             </div>

@@ -63,8 +63,8 @@ class SloganController extends Controller
     public function sloganListByTagSearch($tag_id)
     {
         $tag = Tag::find($tag_id);
-        $slogans = $tag->slogans()->get();
-        return view('slogan.sloganList', ['slogans' => $slogans, 'query' => $tag->tag_name]);
+        $slogans = $tag->slogans()->paginate(3);;
+        return view('slogan.sloganListByTagSearch', ['slogans' => $slogans, 'tag' => $tag]);
     }
 
     /**
@@ -74,13 +74,23 @@ class SloganController extends Controller
      * @param $searchMethod
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function searchSlogans($keyword, $searchMethod)
+    public function searchSlogans(Request $req)
     {
+        //値を取得
+        $keyword = $req->input('keyword');
+        $searchMethod = $req->input('searchMethod');
+
         $data = Slogan::withCount('comments')
             ->where($searchMethod, 'like', '%' . $keyword . '%')
             ->orderByDesc('rating')
-            ->get();
-        return view('slogan.sloganList', ['slogans' => $data]);
+            ->paginate(3);
+
+        $params = [
+            "keyword" => $keyword,
+            "searchMethod" => $searchMethod
+        ];
+
+        return view('slogan.sloganList', ['slogans' => $data,'params'=>$params]);
     }
 
     /**
@@ -200,6 +210,18 @@ class SloganController extends Controller
         ];
 //        fwrite(STDERR, print_r($redirectParam, TRUE));
         return redirect(route('sloganDetail', $redirectParam))->with('message', 'コメントを投稿しました。');
+    }
+
+    /**
+     * コメントを1件削除する
+     *
+     * @param $slogan_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function deleteComment(Request $req)
+    {
+        Comment::find($req->comment_id)->delete();
+        return redirect(url()->previous())->with('message', 'コメントを1件削除しました。');
     }
 
 //    /**

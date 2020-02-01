@@ -14,15 +14,20 @@
 //Route::get('/', 'SloganController@getSlogans');
 Route::get('/{order?}', 'SloganController@getOrderSlogans')
     ->where('order', '(updated_at|rating)')
-    ->name('home');
+    ->name('top');
 Route::get('/getTags', 'SloganController@getTags')
     ->name('tagList');
-Route::get('sloganList/{keyword}/{searchMethod}', 'SloganController@searchSlogans')
+/*Route::get('sloganList/{keyword}/{searchMethod}', 'SloganController@searchSlogans')
     ->where([
         'keyword' => '[^\s　]+',
         'searchMethod' => '(phrase|writer|source)'])
+    ->name('sloganList');*/
+
+Route::get('sloganList', 'SloganController@searchSlogans')
     ->name('sloganList');
-Route::get('sloganList/{tag_id}', 'SloganController@sloganListByTagSearch')
+
+
+Route::get('sloganListByTagSearch/{tag_id}', 'SloganController@sloganListByTagSearch')
     ->where('tag_id', '[0-9]+')
     ->name('sloganListByTagSearch');
 Route::get('/inputSlogan', 'SloganController@inputSlogan')
@@ -43,3 +48,13 @@ Route::post('sloganDetail/addTag', 'SloganController@addTag')
     ->name('addTag');
 Route::get('sloganDetail/searchTag', 'SloganController@searchTag')
     ->name('searchTag');
+Route::post('sloganDetail/deleteComment', 'SloganController@deleteComment')
+    ->name('deleteComment');
+Route::get('/inputContact', 'ContactController@inputContact')
+    ->name('inputContact');
+Route::post('/sendContact', 'ContactController@sendContact')
+    ->name('sendContact');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

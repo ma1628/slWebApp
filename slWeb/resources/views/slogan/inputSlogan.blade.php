@@ -49,9 +49,10 @@
             </div>
             <br>
             <br>
-            <form id="addForm" action="{{ route('addSlogan') }}" method="post">
+            {{--Enterキーによるsubmit防止--}}
+            <form id="addForm" action="{{ route('addSlogan') }}" onsubmit="return false;" method="post">
                 {{ csrf_field() }}
-                <button type="submit" form="addForm" name="submit" class="btn btn-outline-primary mb-5">キャッチコピーを追加する
+                <button type="button" form="addForm" onclick="submit();" class="btn btn-outline-primary mb-5">キャッチコピーを追加する
                 </button>
             </form>
         </div>
@@ -80,6 +81,13 @@
                             }
                         }
                     });
+                }
+            });
+
+            // Enterキー押下でタグ追加
+            $("#tag_name").keypress(function(e){
+                if(e.which == 13){
+                    $("#addPreTag").click();
                 }
             });
 

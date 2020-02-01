@@ -8,44 +8,37 @@
             <li class="breadcrumb-item active" aria-current="page">キャッチコピー一覧</li>
         </ol>
     </nav>
-    <div class="card">
-        <div class="card-body">
-            @forelse ($slogans as $slogan)
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h2>{{$slogan->phrase}}</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-text">
-                            {{$slogan->rating}}<br>
-                            @forelse ($slogan->tags as $tag)
-                                <a href="#" class="badge badge-pill  badge-secondary">{{$tag->tag_name}}</a>
-                                @if ($loop->index == 2)
-                                    ...<br>
-                                    <?php break; ?>
-                                @endif
-                            @empty
-                            @endforelse
-                            {!! nl2br(e(Str::limit($slogan->writer."\r\n", 200))) !!}
-                            {!! nl2br(e(Str::limit("出典：".$slogan->source."\r\n", 200))) !!}
-                            {!! nl2br(e(Str::limit("その他補足：".$slogan->supplement."\r\n", 40))) !!}
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                    <span class="mr-2">
-                        <time class="text-secondary">更新日時 {{ $slogan->updated_at->format('Y.m.d') }}</time>
-                    </span>
-                        @if ($slogan->comments_count)
-                            <a href="{{ route('sloganDetail',['slogan_id'=> $slogan->id]) }}"
-                               class="badge badge-primary">
-                                コメント {{ $slogan->comments_count }}件
-                            </a>
-                        @endif
-                    </div>
+    <div class="container-fluid">
+    <br>
+    <form action="{{ route('sloganList') }}" id="searchForm" method="get">
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <div class="input-group-append dropdown">
+                    <select class="form-control" form="searchForm" id="searchMethod" name="searchMethod" >
+                        <option value="phrase">キャッチコピーから探す</option>
+                        <option value="writer">ライターから探す</option>
+                        <option value="source">出典から探す</option>
+                    </select>
                 </div>
-            @empty
-                <p>該当するキャッチコピーがありません</p>
-            @endforelse
+                <input type="text" class="form-control" form="searchForm" placeholder="" aria-label="Recipient's username"
+                       aria-describedby="button-addon2" name="keyword" value="{{$params["keyword"]}}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p>全{{$slogans->lastPage()}}ページ　{{$slogans->currentPage()}}ページ目を表示（約{{$slogans->total()}}件中）</p>
+    <div class="card">
+    @include('slogansCardBody')
+        <div class="d-flex justify-content-center">
+            {{ $slogans->appends($params)->links() }}
         </div>
     </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#searchMethod").val("{{$params["searchMethod"]}}");
+        });
+    </script>
 @endsection

@@ -18,31 +18,31 @@
             <div class="form-group">
                 <label for="editPhrase">キャッチコピー</label>
                 <textarea class="form-control form-control-lg" name="phrase" rows="3" form="editForm"
-                          id="editPhrase">{!! nl2br(e(str_limit($slogan->phrase))) !!}</textarea>
+                          id="editPhrase">{{$slogan->phrase}}</textarea>
             </div>
             <div class="form-group">
                 <label for="editWriter">作者</label>
                 <input type="text" class="form-control" id="editWriter" name="writer" form="editForm"
-                       value="{!! nl2br(e(str_limit($slogan->writer))) !!}">
+                       value="{{$slogan->writer}}">
             </div>
             <div class="form-group">
                 <label for="editSource">出典</label>
                 <textarea class="form-control" name="source" form="editForm"
-                          id="editSource">{!! nl2br(e(str_limit($slogan->source))) !!}</textarea>
+                          id="editSource">{{$slogan->source}}</textarea>
             </div>
             <div class="form-group">
                 <label for="editSupplement">その他補足</label>
                 <textarea class="form-control" name="supplement" form="editForm"
-                          id="editSupplement">{!! nl2br(e(str_limit($slogan->supplement))) !!}</textarea>
+                          id="editSupplement">{{$slogan->supplement}}</textarea>
             </div>
             <label>タグを編集する</label>
             <br>
             <div class="mb-3" id="addedTags">
                 @forelse ($slogan->tags as $tag)
-                    <div class="badge badge-pill badge-secondary">#{{$tag->tag_name}}<span class="erase">｜×</span>
-                    </div>
+                    <div class="badge badge-pill badge-secondary">#{{$tag->tag_name}}<span class="erase">｜×</span></div>
                 @empty
                 @endforelse
+                    {{--tag名が#区切りで設定される--}}
                     <input type="hidden" form="editForm" id="tagNames" name="tagNames" value="">
             </div>
             <div class="input-group">
@@ -55,9 +55,9 @@
             </div>
             <br>
             <br>
-            <form id="editForm" action="{{ route('updateSlogan') }}" method="post">
+            <form id="editForm" action="{{ route('updateSlogan') }}" onsubmit="return false;" method="post">
                 {{ csrf_field() }}
-                <button type="submit" form="editForm" name="submit" class="btn btn-outline-primary mb-5">編集を完了する
+                <button type="button" form="editForm" onclick="submit();" class="btn btn-outline-primary mb-5">編集を完了する
                 </button>
             </form>
         </div>
@@ -96,6 +96,13 @@
                 }
             });
 
+            // Enterキー押下でタグ追加
+            $("#tag_name").keypress(function(e){
+                if(e.which == 13){
+                    $("#addPreTag").click();
+                }
+            });
+
             // タグ名入力
             $(document).on('click', 'li', function () {
                 $('#tag_name').val($(this).text());
@@ -108,7 +115,7 @@
                 //半角シャープは入力不可
                 let tagName = $('#tag_name').val();
                 if (tagName.indexOf('#') !== -1) {
-                    alert("半角シャープ不要");
+                    alert("半角シャープは不要です");
                     return;
                 }
 
@@ -125,14 +132,9 @@
 
             // タグ削除
             $(document).on('click', '.erase', function (e) {
-                alert($(e.target).parent().text());
-                let aaa = $(e.target).parent().text();
-                alert("かた"+typeof(aaa));
-                let erasedTagName = aaa.slice(0, -2);
-                // let erasedTagName = $(e.target).parent().text().slice( 0, -2 );
+                let strTagName = $(e.target).parent().text().replace('｜×', '');
+                let fixedTagNames = $('#tagNames').val().replace(strTagName, '');
                 $(e.target).parent().remove();
-                alert(erasedTagName);
-                let fixedTagNames = $('#tagNames').val().replace(erasedTagName, '');
                 $('#tagNames').val(fixedTagNames);
             });
         });
