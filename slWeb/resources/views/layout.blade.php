@@ -23,6 +23,7 @@
             crossorigin="anonymous"></script>--}}
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slWeb.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src='https://cdn.jsdelivr.net/npm/jquery-autosize@1.18.18/jquery.autosize.min.js'></script>
@@ -60,26 +61,6 @@
                 @endauth
             </ul>
         </div>
-
-
-
-
-
-
-{{--        @if (Route::has('login'))--}}
-{{--            <div class="top-right links">--}}
-{{--                @auth--}}
-{{--                    <a href="{{ url('/home') }}">Home</a>--}}
-{{--                    <p class="navbar-brand">{{Auth::user()->name}}さん</p>--}}
-{{--                    <form method="post" name="form1" action="{{ route('logout') }}">--}}
-{{--                        <button type="submit">aa</button>--}}
-{{--                    </form>--}}
-{{--                @else--}}
-{{--                    <a href="{{ route('login') }}">ログイン</a>--}}
-{{--                    <a href="{{ route('register') }}">会員登録</a>--}}
-{{--                @endauth--}}
-{{--            </div>--}}
-{{--        @endif--}}
     </div>
 </header>
 
@@ -92,7 +73,6 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-
     @endif
 
     @yield('content')

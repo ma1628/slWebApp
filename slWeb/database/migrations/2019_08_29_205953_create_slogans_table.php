@@ -15,9 +15,9 @@ class CreateSlogansTable extends Migration
     {
         Schema::create('slogans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('phrase');
-            $table->string('writer')->nullable();
-            $table->string('source');
+            $table->string('phrase',255);
+            $table->string('writer',255)->nullable();
+            $table->string('source',255);
             $table->decimal('rating',2,1);
             $table->text('supplement')->nullable();
             $table->timestamps();

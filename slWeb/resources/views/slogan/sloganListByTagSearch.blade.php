@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+    {{ Breadcrumbs::render('sloganListByTagSearch', $tag) }}
     <div class="container-fluid">
         <br>
         <h3>

@@ -16,6 +16,12 @@ class SloganDetailsPost extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        // バリデーションエラーの場合タグを再表示させる
+        $this->session()->flash('oldTagNames', $this->get('tagNames'));
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,14 +30,11 @@ class SloganDetailsPost extends FormRequest
     public function rules()
     {
         return [
-            'phrase' => 'required|string|max:50|regex:/[^　]+/',
-            'writer' => 'nullable|string|max:15',
-            'source' => 'required|string|max:50|regex:/[^　]+/',
-            'supplement' => 'nullable|string|max:1000',
-            //'tags.*.slogan_id' => 'required|integer|exists:slogans,id',
-//            'tags' => 'string|max:30|regex:/[^　]+/',
-            'tagNames' => 'nullable|string|max:90|regex:/[#.{1,30}]+/',
-//            'tags.*.tag_kana' => 'nullable|string|max:90|regex:/^[ぁ-んーa-zA-Z0-9]+$/u',
+            'phrase' => ['required', 'string', 'max:' . config('const.SLOGAN_MAX_INPUT_NUM')],
+            'writer' => ['nullable', 'string', 'max:' . config('const.WRITER_MAX_INPUT_NUM')],
+            'source' => ['required', 'string', 'max:' . config('const.SOURCE_MAX_INPUT_NUM')],
+            'supplement' => ['nullable', 'string', 'max:' . config('const.SUPPLEMENT_MAX_INPUT_NUM')],
+            'tagNames.*' => ['nullable', 'filled', 'string', 'max:' . config('const.TAG_NAME_MAX_INPUT_NUM')]
         ];
     }
 }

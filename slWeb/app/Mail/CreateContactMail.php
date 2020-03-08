@@ -7,7 +7,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendContactMail extends Mailable
+/**
+ * メールを作成する
+ *
+ * Class CreateContactMail
+ * @package App\Mail
+ */
+class CreateContactMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +25,7 @@ class SendContactMail extends Mailable
     /**
      * Create a new message instance.
      *
-     * SendContactMail constructor.
+     * CreateContactMail constructor.
      * @param String $inquiry お問い合わせ本文
      */
     public function __construct(String $inquiry)

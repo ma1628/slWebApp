@@ -11,50 +11,38 @@
 |
 */
 
-//Route::get('/', 'SloganController@getSlogans');
-Route::get('/{order?}', 'SloganController@getOrderSlogans')
+Route::get('/{order?}', 'HomeController')
     ->where('order', '(updated_at|rating)')
-    ->name('top');
-Route::get('/getTags', 'SloganController@getTags')
+    ->name('home');
+Route::get('/getTags', 'TagListController')
     ->name('tagList');
-/*Route::get('sloganList/{keyword}/{searchMethod}', 'SloganController@searchSlogans')
-    ->where([
-        'keyword' => '[^\s　]+',
-        'searchMethod' => '(phrase|writer|source)'])
-    ->name('sloganList');*/
-
-Route::get('sloganList', 'SloganController@searchSlogans')
+Route::get('sloganList', 'SloganListController')
     ->name('sloganList');
-
-
-Route::get('sloganListByTagSearch/{tag_id}', 'SloganController@sloganListByTagSearch')
+Route::get('sloganListByTagSearch/{tag_id}', 'SloganListByTagSearchController')
     ->where('tag_id', '[0-9]+')
     ->name('sloganListByTagSearch');
-Route::get('/inputSlogan', 'SloganController@inputSlogan')
+Route::get('/inputSlogan', 'InputSloganController')
     ->name('inputSlogan');
-Route::post('/addSlogan', 'SloganController@addSlogan')
+Route::post('/addSlogan', 'AddSloganController')
     ->name('addSlogan');
-Route::get('sloganDetail/{slogan_id}', 'SloganController@getSloganDetail')
+Route::get('sloganDetail/{slogan_id}', 'SloganDetailController')
     ->where('slogan_id', '[0-9]+')
     ->name('sloganDetail');
-Route::get('sloganDetail/editSlogan/{slogan_id}', 'SloganController@editSlogan')
+Route::get('sloganDetail/editSlogan/{slogan_id}', 'EditSloganController')
     ->where('slogan_id', '[0-9]+')
     ->name('editSlogan');
-Route::post('sloganDetail/updateSlogan', 'SloganController@updateSloganDetail')
+Route::post('sloganDetail/updateSlogan', 'UpdateSloganController')
     ->name('updateSlogan');
-Route::post('sloganDetail/addComment', 'SloganController@addComment')
+Route::post('sloganDetail/addComment', 'AddCommentController')
     ->name('addComment');
-Route::post('sloganDetail/addTag', 'SloganController@addTag')
-    ->name('addTag');
-Route::get('sloganDetail/searchTag', 'SloganController@searchTag')
-    ->name('searchTag');
-Route::post('sloganDetail/deleteComment', 'SloganController@deleteComment')
+Route::post('sloganDetail/deleteComment', 'DeleteCommentController')
     ->name('deleteComment');
-Route::get('/inputContact', 'ContactController@inputContact')
+Route::get('sloganDetail/searchTag', 'SearchTagController')
+    ->name('searchTag');
+Route::get('/inputContact', 'InputContactController')
     ->name('inputContact');
-Route::post('/sendContact', 'ContactController@sendContact')
+Route::post('/sendContact', 'SendContactController')
     ->name('sendContact');
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

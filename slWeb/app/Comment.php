@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int $slogan_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereSloganId($value)
+ * @property int $rating
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereRating($value)
  */
 class Comment extends Model
 {
@@ -34,4 +36,12 @@ class Comment extends Model
         'text',
         'rating'
     ];
+
+    /**
+     * このコメントを所有するキャッチコピーを取得
+     */
+    public function slogan()
+    {
+        return $this->belongsTo('App\Slogan');
+    }
 }

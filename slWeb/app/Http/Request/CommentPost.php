@@ -24,9 +24,9 @@ class CommentPost extends FormRequest
     public function rules()
     {
         return [
-            'contributor_name' => 'required|string|max:30|regex:/[^　]+/',
-            'text' => 'required|string|max:300|regex:/[^　]+/',
-            'rating' => 'required|integer|between:1,5',
+            'contributor_name' => ['required', 'string', 'max:' . config('const.CONTRIBUTOR_NAME_MAX_INPUT_NUM')],
+            'text' => ['required', 'string', 'max:' . config('const.COMMENT_MAX_INPUT_NUM')],
+            'rating' => ['required', 'integer', 'between:1,5']
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendMailPost extends FormRequest
+class InquiryPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class SendMailPost extends FormRequest
     public function rules()
     {
         return [
-            'inquiry' => 'required|string|max:1000|',
+            'inquiry' => ['required', 'string', 'max:' . config('const.INQUIRY_MAX_INPUT_NUM')]
         ];
     }
 }

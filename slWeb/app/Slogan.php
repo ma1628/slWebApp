@@ -28,6 +28,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Slogan whereSupplement($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Slogan whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Slogan whereWriter($value)
+ * @property-read int|null $comments_count
+ * @property-read int|null $tags_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Slogan whereRating($value)
  */
 class Slogan extends Model
 {
@@ -39,7 +42,7 @@ class Slogan extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderByDesc('created_at');
     }
 
     public function tags()

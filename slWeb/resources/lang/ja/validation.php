@@ -78,7 +78,7 @@ return [
         'numeric' => ':attributeには、:max以下の数字を指定してください。',
         'file'    => ':attributeには、:max kB以下のファイルを指定してください。',
 //        'string'  => ':attributeは、:max文字以下で指定してください。',
-        'string'  => ':attributeは、:max文字以下で入力してください。',
+        'string'  => ':attributeは:max文字以下で入力してください。',
         'array'   => ':attributeは:max個以下指定してください。',
     ],
     'mimes'                => ':attributeには:valuesタイプのファイルを指定してください。',
@@ -130,34 +130,7 @@ return [
         '属性名' => [
             'ルール名' => 'カスタムメッセージ',
         ],
-        // SloganDetailsPost
-        'phrase' => [
-            'regex' => ':attributeは必ず入力してください。',
-        ],
-        'source' => [
-            'regex' => ':attributeは必ず入力してください。',
-        ],
-
-        //CommentPost
-        'contributor_name' => [
-            'regex' => ':attributeは必ず入力してください。',
-        ],
-        'text' => [
-            'regex' => ':attributeは必ず入力してください。',
-        ],
-        'slogan_id' => [
-            'required' => 'エラーが発生しました。',
-            'integer' => 'エラーが発生しました。',
-            'exists' => 'エラーが発生しました。',
-        ],
-
-        //TagDetailsPost
-        'tag_name' => [
-            'regex' => ':attributeは必ず入力してください。',
-        ],
-        'tag_kana' => [
-            'string' => 'エラーが発生しました。',
-            'max' => 'エラーが発生しました。タグ名が長すぎます。',
+        'searchMethod' => [
             'regex' => 'エラーが発生しました。',
         ],
     ],
@@ -181,7 +154,9 @@ return [
         'contributor_name' => '投稿者名',
         'text' => 'コメント',
         'rating' => '評価',
-        'tag_name' =>'タグ名',
+        'tagNames.*' =>'タグ',
+        'inquiry' =>'お問い合わせ内容',
+        'keyword' =>'検索条件',
     ],
 
 ];

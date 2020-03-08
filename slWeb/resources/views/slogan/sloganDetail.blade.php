@@ -1,30 +1,22 @@
 @extends('layout')
 
 @section('content')
+    {{ Breadcrumbs::render('sloganDetail', $slogan) }}
+    @include('errorMassageDiv')
     <div class="container-fluid">
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <div class="border p-4">
             <h2>
-                {!! nl2br(e(Str::limit($slogan->phrase."\r\n", 200))) !!}
+                {!! nl2br(e(Str::limit($slogan->phrase."\r\n"))) !!}
             </h2>
             @forelse ($slogan->tags as $tag)
-                <a href="#" class="badge badge-pill  badge-primary">{{$tag->tag_name}}</a>
+                <a href="{{ route('sloganListByTagSearch',['tag_id'=> $tag->id]) }}"
+                   class="badge badge-pill badge-primary">{{$tag->tag_name}}</a>
             @empty
             @endforelse
             <br>
-            {!! nl2br(e(Str::limit($slogan->writer."\r\n", 200))) !!}
-            {!! nl2br(e(Str::limit("出典：".$slogan->source."\r\n", 200))) !!}
-            {!! nl2br(e(Str::limit("その他補足：".$slogan->supplement."\r\n", 200))) !!}
+            <b>作者：</b>{!! nl2br(e($slogan->writer)."\r\n") !!}
+            <b>出典：</b>{!! nl2br(e($slogan->source)."\r\n") !!}
+            <b>その他補足：</b>{!! nl2br(e($slogan->supplement."\r\n")) !!}
             <a href="{{ route('editSlogan',['slogan_id'=> $slogan->id]) }}"
                class="btn btn-outline-primary mb-5">
                 編集する
@@ -45,17 +37,17 @@
                             {!! nl2br(e($comment->text)) !!}
                         </p>
 
-
-                            <form name="deleteCommentForm" action="{{ route('deleteComment')}}" method="post">
-
-                                <time class="text-secondary">
-                                    {{ $comment->created_at->format('Y.m.d H:i') }}
-                                </time>
-                                    {{ csrf_field() }}
-                                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
-                                    <input type="hidden" name="slogan_id" value="{{$slogan->id}}">
-                                    <button type="submit"><i class="fas fa-trash-alt"></i></button>
-                            </form>
+                        <form name="deleteCommentForm" action="{{ route('deleteComment')}}" method="post">
+                            <time class="text-secondary">
+                                {{ $comment->created_at->format('Y.m.d H:i') }}
+                            </time>
+                            {{ csrf_field() }}
+                            <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                            <input type="hidden" name="slogan_id" value="{{$slogan->id}}">
+                            @auth
+                                <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                            @endauth
+                        </form>
 
                     </div>
                 @empty
@@ -65,19 +57,18 @@
         </div>
     </div>
 
-    <!-- 2.モーダルの配置 -->
+    {{-- モーダルの配置 --}}
     <div class="modal" id="comment-modal" tabindex="-1">
         <div class="modal-dialog">
-            <!-- 3.モーダルのコンテンツ -->
+            {{-- モーダルのコンテンツ  --}}
             <div class="modal-content">
-                <!-- 4.モーダルのヘッダ -->
+                {{-- モーダルのヘッダ --}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    {{--                    <h4 class="modal-title" id="modal-label">ダイアログ</h4>--}}
                 </div>
-                <!-- 5.モーダルのボディ -->
+                {{-- モーダルのボディ --}}
                 <form id="addForm" action="{{ route('addComment')}}" onsubmit="return false;" method="post">
                     {{ csrf_field() }}
                     <input type="hidden" class="form-control" name="slogan_id" value="{{$slogan->id}}">
@@ -88,16 +79,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="text1">投稿者名:</label>
-                            <input type="text" id="contributor_name" class="form-control" name="contributor_name"
-                                   value="匿名">
+                            <label for="contributor_name">投稿者名:</label>
+                            <input type="text" id="contributor_name"
+                                   maxlength="{{config('const.CONTRIBUTOR_NAME_MAX_INPUT_NUM')}}"
+                                   class="form-control" name="contributor_name" value="匿名">
                         </div>
                         <div class="form-group">
-                            <label for="textarea1">コメント:</label>
-                            <textarea id="comment" class="form-control" name="text"></textarea>
+                            <label for="text">コメント:</label>
+                            <textarea id="comment" maxlength="{{config('const.COMMENT_MAX_INPUT_NUM')}}"
+                                      class="form-control"
+                                      name="text"></textarea>
                         </div>
                     </div>
-                    <!-- 6.モーダルのフッタ -->
+                    {{-- モーダルのフッタ --}}
                     <div class="modal-footer">
                         <button type="button" onclick="submit();" form="addForm" class="btn btn-outline-primary mb-5">保存
                         </button>
@@ -115,64 +109,17 @@
                 scoreName: 'rating',
                 path: '{{ asset('ratyLib/images') }}'
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
+
             $('.rate_star_output').raty({
                 readOnly: true,
                 number: 5,
                 precision: true,
                 half: true,
-                score : function() {
+                score: function () {
                     return $(this).children("span").text();
                 },
-                path:  '{{ asset('ratyLib/images') }}'
+                path: '{{ asset('ratyLib/images') }}'
             });
         });
     </script>
-    <script>
-        $(document).ready(function () {
-            $('#tag_name').keyup(function () {
-                var query = $(this).val();
-                if (query != '') {
-                    // var _token = $('input[name="_token"]').val();
-                    $.ajax({
-                        url: "{{ route('searchTag') }}",
-                        method: "GET",
-                        data: {query: query},
-                        success: function (data) {
-                            $('#tagList').fadeIn();
-                            $('#tagList').html(data);
-                        }
-                    });
-                }
-            });
-
-            $(document).on('click', 'li', function () {
-                $('#tag_name').val($(this).text());
-                $('#tagList').fadeOut();
-            });
-
-            $('#addPreTag').click(function () {
-                let tagName = $('#tag_name').val();
-                $('#addedTags').prepend('<span class="badge badge-pill badge-primary preAddedTag">' + tagName + '<span class=\'erase\'>｜×</span>\'</span>');
-            })
-
-            $(".preAddedTag").click(function (e) {
-                if ($(e.target).hasClass("erase")) {
-                    alert(2);
-                    // $(this).unwrap();
-                    $(e).remove();
-                } else {
-                    //普通の動作
-                }
-            });
-
-        });
-    </script>
-
-
-
-
 @endsection

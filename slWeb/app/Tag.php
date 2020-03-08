@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Tag whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Tag whereTagName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Tag whereUpdatedAt($value)
+ * @property string|null $tag_kana
+ * @property-read int|null $slogans_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Tag whereTagKana($value)
  */
 class Tag extends Model
 {

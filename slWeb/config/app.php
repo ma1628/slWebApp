@@ -39,8 +39,7 @@ return [
     |
     */
 
-    //    'debug' => env('APP_DEBUG', false), TODO 本番環境ではfalseにする
-    'debug' => env('APP_DEBUG', true),
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------

@@ -11,11 +11,11 @@ class TestDataSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Slogan::class, 3)
+        factory(\App\Slogan::class, 25)
             ->create()
             ->each(function ($slogan) {
 
-                factory(\App\Comment::class, 2)
+                factory(\App\Comment::class, 3)
                     ->make()
                     ->each(function ($comment) use ($slogan) {
                         $slogan->comments()->save($comment);
@@ -29,8 +29,11 @@ class TestDataSeeder extends Seeder
             ->create()
             ->each(function ($tag) use ($slogans) {
                 $tag->slogans()->attach(
-                    $slogans->random(rand(1,3))->pluck('id')->toArray() // 1～3個のproductをorderにランダムに紐づけ
+                    $slogans->random(rand(1,3))->pluck('id')->toArray() // 1～3個のtagをsloganにランダムに紐づけ
                 );
             });
+
+        factory(\App\User::class, 3)
+            ->create();
     }
 }

@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\SloganService;
 
+/**
+ * Home画面を表示する
+ *
+ * Class HomeController
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @param SloganService $sloganService
+     * @param null $order
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function __construct()
+    public function __invoke(SloganService $sloganService, $order = null)
     {
-        $this->middleware('auth');
-    }
+        // 全てのキャッチコピーを指定されたソート順で取得
+        $data = $sloganService->getAllSlogans($order);
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
+        return view('home', ['slogans' => $data]);
     }
 }
