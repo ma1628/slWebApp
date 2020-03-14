@@ -25,5 +25,8 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {}
+    "dependencies": {
+        "jquery-autosize": "^1.18.18",
+        "raty-js": "^2.9.0"
+    }
 }

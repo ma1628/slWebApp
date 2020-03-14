@@ -2,7 +2,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('sloganListByTagSearch', $tag) }}
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
         <br>
         <h3>
             タグ：#{{$tag->tag_name}} のキャッチコピー一覧

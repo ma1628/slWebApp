@@ -17,6 +17,7 @@ class AddSloganController extends Controller
      * @param SloganDetailsPost $request
      * @param SloganService $sloganService
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Throwable
      */
     public function __invoke(SloganDetailsPost $request, SloganService $sloganService)
     {

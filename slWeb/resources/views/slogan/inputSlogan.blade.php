@@ -2,7 +2,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('inputSlogan') }}
-    <div class="container mt-4">
+    <div class="container-fluid p-0">
         @include('errorMassageDiv')
         <div class="border p-4">
             <div class="form-group">

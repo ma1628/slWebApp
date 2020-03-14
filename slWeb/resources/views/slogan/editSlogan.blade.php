@@ -2,7 +2,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('editSlogan', $slogan) }}
-    <div class="container mt-4">
+    <div class="container-fluid p-0">
         @include('errorMassageDiv')
         <div class="border p-4">
             <input type="hidden" form="editForm" name="slogan_id" value="{{$slogan->id}}">
@@ -116,10 +116,7 @@
             addTag("{{ $oldTagName }}");
             @endforeach
             @else
-
             @forelse ($slogan->tags as $tag)
-        {{--<div class="badge badge-pill badge-secondary">#{{$tag->tag_name}}<span class="erase">｜×</span>--}}
-        {{--    <input type="hidden" form="editForm" name="tagNames[]" value="{{$tag->tag_name}}"></div>--}}
             addTag("{{$tag->tag_name}}");
         @empty
             @endforelse
@@ -131,8 +128,4 @@
             });
         });
     </script>
-
-
-
-
 @endsection

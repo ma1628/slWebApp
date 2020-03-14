@@ -2,7 +2,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('sloganList', $params["keyword"]) }}
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
         <br>
         <form action="{{ route('sloganList') }}" id="searchForm" method="get">
             <div class="form-group">

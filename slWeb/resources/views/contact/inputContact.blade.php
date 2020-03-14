@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="container mt-4">
+    <div class="container mt-4 p-0">
         @include('errorMassageDiv')
         <div class="border p-4">
             <form action="{{ route('sendContact') }}" onsubmit="return false;" method="post">

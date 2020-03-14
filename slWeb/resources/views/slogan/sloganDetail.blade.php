@@ -3,7 +3,7 @@
 @section('content')
     {{ Breadcrumbs::render('sloganDetail', $slogan) }}
     @include('errorMassageDiv')
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
         <div class="border p-4">
             <h2>
                 {!! nl2br(e(Str::limit($slogan->phrase."\r\n"))) !!}

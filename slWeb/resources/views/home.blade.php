@@ -3,7 +3,7 @@
 @section('content')
     {{ Breadcrumbs::render('home') }}
     @include('errorMassageDiv')
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
         <br>
         <form action="{{ route('sloganList') }}" id="searchForm" method="get">
             <div class="form-group">
@@ -43,6 +43,7 @@
                                             href="{{ route('home' ,['order'=> 'updated_at']) }}">新着順</a></li>
                 </ul>
             </div>
+            <br>
             @include('slogansCardBody')
             <div class="d-flex justify-content-center">
                 {{ $slogans->links() }}

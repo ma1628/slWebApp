@@ -1,8 +1,8 @@
-<div class="card-body">
+<div class="w-100">
     @forelse ($slogans as $slogan)
         <div class="card mb-4">
             <div class="card-header slogan_div">
-                <h2>{{$slogan->phrase}}</h2>
+                <h4>{{$slogan->phrase}}</h4>
                 <a href="{{ route('sloganDetail',['slogan_id'=> $slogan->id]) }}" class="slogan_a"></a>
             </div>
             <div class="card-body">
