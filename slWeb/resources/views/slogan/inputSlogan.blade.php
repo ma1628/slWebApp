@@ -35,7 +35,7 @@
             </div>
             <div class="input-group">
                 <input type="text" maxlength="{{config('const.TAG_NAME_MAX_INPUT_NUM')}}"
-                id="tag_name" name="tag_name" class="form-control">
+                       id="tag_name" name="tag_name" class="form-control">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="addPreTag">タグを追加</button>
                 </div>
@@ -55,24 +55,24 @@
     </div>
 
     <script>
-        var jqxhr = null;
+        let jqxhr = null;
 
         $(document).ready(function () {
 
             $('textarea').autosize();
-            // オートコンプリート
+            {{--オートコンプリート--}}
             $('#tag_name').keyup(function () {
                 if (jqxhr) {
                     jqxhr.abort();
                 }
-                var query = $(this).val();
+                let query = $(this).val();
                 if (query != '') {
                     jqxhr = $.ajax({
                         url: "{{ route('searchTag') }}",
                         method: "GET",
                         data: {query: query},
                     }).done(function (returnData) {
-                        if (returnData) {
+                        if (returnData && $('#tag_name:focus')[0]) {
                             $('#tagList').fadeIn();
                             $('#tagList').html(returnData);
                         } else {
@@ -82,22 +82,29 @@
                 }
             });
 
-            // Enterキー押下でタグ追加
             $("#tag_name").keypress(function (e) {
+                {{--Enterキー押下でタグ追加--}}
                 if (e.which == 13) {
                     $("#addPreTag").click();
                 }
-            });
-
-            // タグ名入力
-            $(document).on('click', 'li', function () {
-                $('#tag_name').val($(this).text());
+            }).blur(function (e) {
                 $('#tagList').fadeOut();
             });
 
-            // タグ追加
+            {{--タグ入力--}}
+            $(document).on('click', 'li.tag_li', function () {
+                $('#tag_name').val($(this).text());
+                $('#tagList').fadeOut();
+                {{--処理を中断してスクロールを戻させない--}}
+                return false;
+            });
+
+            {{--タグ追加--}}
             $('#addPreTag').click(function () {
                 let tagName = $('#tag_name').val();
+                if (tagName === "") {
+                    return false;
+                }
                 addTag(tagName);
                 $('#tag_name').val('');
             });

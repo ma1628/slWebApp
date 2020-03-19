@@ -53,17 +53,6 @@
 
     <script>
         $(document).ready(function () {
-            $('.rate_star_output').raty({
-                readOnly: true,
-                number: 5,
-                precision: true,
-                half: true,
-                score: function () {
-                    return $(this).children("span").text();
-                },
-                path: '{{ asset('ratyLib/images') }}'
-            });
-
             {{--表示順をアクティブにする--}}
             @if (Request::is('updated_at'))
             $("#updated_at").addClass("active");

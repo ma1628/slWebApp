@@ -22,7 +22,7 @@ class SearchTagTest extends SlWebTestCase
         $data = Tag::where('tag_name', 'LIKE', "%{$tag_name}%")->get();
         $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
         foreach ($data as $row) {
-            $output .= '<li><a href="#">' . $row->tag_name . '</a></li>';
+            $output .= '<li class="tag_li"><a href="#">' . $row->tag_name . '</a></li>';
         }
         $output .= '</ul>';
 

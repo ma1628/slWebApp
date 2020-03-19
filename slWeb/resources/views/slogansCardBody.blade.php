@@ -44,4 +44,17 @@
         <p>該当するキャッチコピーが存在しません。</p>
     @endforelse
 </div>
-
+<script>
+    $(document).ready(function () {
+        $('.rate_star_output').raty({
+            readOnly: true,
+            number: 5,
+            precision: true,
+            half: true,
+            score: function () {
+                return $(this).children("span").text();
+            },
+            path: '{{ asset('ratyLib/images') }}'
+        });
+    });
+</script>

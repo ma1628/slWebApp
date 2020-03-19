@@ -71,6 +71,6 @@ Route::get('/inputContact', 'InputContactController')
 Route::post('/sendContact', 'SendContactController')
     ->name('sendContact');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 //Route::get('/home', 'HomeController@index')->name('home');
