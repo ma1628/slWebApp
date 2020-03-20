@@ -94,6 +94,7 @@
             $(document).on('click', 'li.tag_li', function () {
                 $('#tag_name').val($(this).text());
                 $('#tagList').fadeOut();
+                {{--処理を中断してスクロールを戻させない--}}
                 return false;
             });
 
